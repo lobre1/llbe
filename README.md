@@ -14,4 +14,15 @@ run the command
 ```sh
 ./llbe 'filename'
 ```
-to start the editor
+to start the editor \
+Get commands using the h command 
+
+## TODO
+| TODO |
+| :---: |
+| FIle append |
+| Insert |
+| Delete |
+| Replace |
+| Save to file |
+| Undo/Redo |
