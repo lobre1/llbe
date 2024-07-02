@@ -50,6 +50,7 @@ int tokenizer( char inp[], char *inpTok[] ){
 		inpTok[tokenCount++]=check;
 		check = strtok(NULL, DELIM);
 	}
+	inpTok[tokenCount]=NULL;
 	free(check);
 	return 0;
 }
