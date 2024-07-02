@@ -11,6 +11,7 @@ int print( char *args[] );
 int line_count();
 int help( char *args[] );
 int append();
+int save();
 
 int isnum(char c[]);
 int line_counter( char text[] );
@@ -22,6 +23,7 @@ char *cmds[]={
 	"p",
 	"lc",
 	"a",
+	"s",
 	"h",
 };
 char *helpStr[]={
@@ -29,6 +31,7 @@ char *helpStr[]={
 	"Print \n   args: \n   '.'':All lines\n   '(number)'nth line\n   default:curLine",
 	"line count",
 	"appened lines to the end",
+	"Saves the file",
 	"Print this text",
 };
 char *textFile;
@@ -38,6 +41,7 @@ int ( *cmdsFunc[] )( char *arg[] )={
 	&print,
 	&line_count,
 	&append,
+	&save,
 	&help
 };
 int cmdNum=sizeof(cmds)/sizeof(char*);
@@ -100,10 +104,12 @@ int print( char *args[] ){
 		return 1;
 	}
 	int size=0, counter=0;
+	size_t n;
 	while (args[size]!=NULL) size++;
 	switch (size) {
 		case 1:
-			for (size_t i=0; i<strlen(textFile); i++) {
+			n=strlen(textFile);
+			for (size_t i=0; i<n; i++) {
 				if (textFile[i]=='\n' || textFile[i]=='\0') {
 					counter++;
 				}
@@ -121,7 +127,8 @@ int print( char *args[] ){
 					printf("Line is out of file\n");
 					return 1;
 				}
-				for (size_t i=0; i<strlen(textFile); i++) {
+				n=strlen(textFile);
+				for (size_t i=0; i<n; i++) {
 					if (textFile[i]=='\n' || textFile[i]=='\0') {
 						counter++;
 					}
@@ -175,6 +182,18 @@ int line_counter(char *text){
 		}
 	}
 	return counter;
+}
+
+int save(){
+	fp=fopen(filename, "w");
+	if (fp==NULL) {
+		printf("Cannot find file\n");
+		return 1;
+	}
+	fprintf(fp, "%s", textFile);
+	printf("Saved to file\n");
+	fclose(fp);
+	return 0;
 }
 
 int isnum(char c[]){
