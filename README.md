@@ -24,7 +24,6 @@ Get commands using the h command
 ## TODO
 | TODO |
 | :---: |
-| FIle append |
 | Insert |
 | Delete |
 | Replace |
