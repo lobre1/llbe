@@ -1,4 +1,4 @@
-# llbe
+# LLBE
 [About](##About) \
 [Compiling](##Compiling) \
 [How to use](#how-to-us) \
@@ -27,5 +27,5 @@ Get commands using the h command
 | Insert |
 | Delete |
 | Replace |
-| Save to file |
 | Undo/Redo |
+| Undo Tree |
