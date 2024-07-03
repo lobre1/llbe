@@ -123,7 +123,21 @@ int print( char *args[] ){
 			break;
 		default:
 			if (strcmp(args[1],".")==0) {
-				printf("%s", textFile);
+				int lineCount=0;
+				n=strlen(textFile);
+				for (size_t i=0; i<n-1; i++) {
+					if (i==0){
+						printf("%d| ", lineCount);
+						lineCount++;
+					}
+					if (textFile[i]!='\n') putchar(textFile[i]);
+					if (textFile[i]=='\n') {
+						printf("\n%d| ", lineCount);
+						lineCount++;
+					}
+					if (textFile[i+1]=='\0') break;
+				}
+				putchar('\n');
 				return 0;
 			}
 			if (isnum(args[1])) {
