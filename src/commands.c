@@ -30,10 +30,10 @@ char *cmds[]={
 };
 char *helpStr[]={
 	"Quit program",
-	"Print \n   args: \n   '.'':All lines\n   '(number)'nth line\n   default:curLine",
+	"Print \n   args: \n   '.'':All lines\n   '(number)'nth line\n   default:current line",
 	"Line count",
 	"Appened lines to the end",
-	"Delete focus line",
+	"Delete focus line   \n   args: \n   '(number)'nth line\n   default:current line",
 	"Saves the file",
 	"Print this text",
 };
@@ -167,7 +167,6 @@ int line_count(){
 
 int append(){
 	int isTyping=1;
-	int inpLength;
 	char inp[SENSIBLE_BUFFER_SIZE]={0};
 	while (isTyping) {
 		fgets(inp, sizeof(inp), stdin);
@@ -191,15 +190,20 @@ int help( char *args[] ){
 }
 
 int del_line( char *args[] ){
+	int line;
+	( args[1]==NULL )?line=curLine+1:0;
+	if (isnum(args[1]) && atoi(args[1])>lineCount-1 || atoi(args[1])<0) {
+		printf("Out of range\n");
+		return 1;
+	}
+	( isnum(args[1]) )?line=atoi(args[1])+1:0;
 	size_t n=strlen(textFile);
-	int lineCounter=0, startIndex=0, endIndex=0;
-	int counter=0;
+	size_t endIndex=0;
+	int lineCounter=0, startIndex=0;
 	int isStart=0;
-	int line=curLine+1;
 	for (size_t i=0; i<n; i++) {
 		if (textFile[i]=='\n') {
 			lineCounter++;
-			counter++;
 			if (lineCounter==line-1 && isStart==0) {
 				startIndex=i+1;
 				isStart=1;
