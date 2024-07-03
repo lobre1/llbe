@@ -11,6 +11,7 @@ int print( char *args[] );
 int line_count();
 int help( char *args[] );
 int append();
+int del_line( char *args[] );
 int save();
 
 int isnum(char c[]);
@@ -23,14 +24,16 @@ char *cmds[]={
 	"p",
 	"lc",
 	"a",
+	"d",
 	"s",
 	"h",
 };
 char *helpStr[]={
 	"Quit program",
 	"Print \n   args: \n   '.'':All lines\n   '(number)'nth line\n   default:curLine",
-	"line count",
-	"appened lines to the end",
+	"Line count",
+	"Appened lines to the end",
+	"Delete focus line",
 	"Saves the file",
 	"Print this text",
 };
@@ -41,6 +44,7 @@ int ( *cmdsFunc[] )( char *arg[] )={
 	&print,
 	&line_count,
 	&append,
+	&del_line,
 	&save,
 	&help
 };
@@ -172,16 +176,30 @@ int help( char *args[] ){
 	return 0;
 }
 
-int line_counter(char *text){
-	if (text == NULL) return 0;
+int del_line( char *args[] ){
+	size_t n=strlen(textFile);
+	int lineCounter=0, startIndex=0, endIndex=0;
 	int counter=0;
-	size_t len=strlen(text);
-	for (size_t i=0; i<len; i++) {
-		if (text[i]=='\n' || text[i]=='\0') {
+	int isStart=0;
+	int line=curLine+1;
+	for (size_t i=0; i<n; i++) {
+		if (textFile[i]=='\n') {
+			lineCounter++;
 			counter++;
+			if (lineCounter==line-1 && isStart==0) {
+				startIndex=i+1;
+				isStart=1;
+			}
+			if (lineCounter==line) {
+				endIndex=i+1;
+				break;
+			}
 		}
 	}
-	return counter;
+	if (endIndex==0)endIndex=n;
+	memmove(&textFile[startIndex], &textFile[endIndex], n-counter+1);
+	printf("C:%d", counter);
+	return 0;
 }
 
 int save(){
@@ -194,6 +212,18 @@ int save(){
 	printf("Saved to file\n");
 	fclose(fp);
 	return 0;
+}
+
+int line_counter(char *text){
+	if (text == NULL) return 0;
+	int counter=0;
+	size_t len=strlen(text);
+	for (size_t i=0; i<len; i++) {
+		if (text[i]=='\n' || text[i]=='\0') {
+			counter++;
+		}
+	}
+	return counter;
 }
 
 int isnum(char c[]){
