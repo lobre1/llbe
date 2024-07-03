@@ -1,5 +1,4 @@
 # LLBE
-[![HitCount](https://hits.dwyl.com/lobre1/llbe.svg?style=flat-square&show=unique)](http://hits.dwyl.com/lobre1/llbe) \
 [About](##About) \
 [Compiling](##Compiling) \
 [How to use](#how-to-us) \
