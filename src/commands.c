@@ -197,8 +197,13 @@ int del_line( char *args[] ){
 		}
 	}
 	if (endIndex==0)endIndex=n;
-	memmove(&textFile[startIndex], &textFile[endIndex], n-counter+1);
-	printf("C:%d", counter);
+	if (startIndex<endIndex && endIndex<=n) {
+		size_t movedBytes=n-endIndex;
+		size_t newSize=n-(endIndex-startIndex);
+		memmove(textFile+startIndex, textFile+endIndex, movedBytes);
+		//textFile=realloc(textFile, newSize+1);
+		textFile[newSize]='\0';
+	}
 	return 0;
 }
 
