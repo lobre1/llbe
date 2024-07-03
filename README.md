@@ -25,7 +25,6 @@ Get commands using the h command
 | TODO |
 | :---: |
 | Insert |
-| Delete |
 | Replace |
 | Undo/Redo |
 | Undo Tree |
