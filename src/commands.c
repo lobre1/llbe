@@ -11,6 +11,7 @@ int print( char *args[] );
 int line_count();
 int help( char *args[] );
 int append();
+int replace( char *args[] );
 int del_line( char *args[] );
 int save();
 
@@ -26,6 +27,7 @@ char *cmds[]={
 	"a",
 	"d",
 	"s",
+	"r",
 	"h",
 };
 char *helpStr[]={
@@ -35,6 +37,7 @@ char *helpStr[]={
 	"Appened lines to the end",
 	"Delete focus line   \n   args: \n   '(number)'nth line\n   default:current line",
 	"Saves the file",
+	"Replace line",
 	"Print this text",
 };
 char *textFile;
@@ -46,6 +49,7 @@ int ( *cmdsFunc[] )( char *arg[] )={
 	&append,
 	&del_line,
 	&save,
+	&replace,
 	&help
 };
 int cmdNum=sizeof(cmds)/sizeof(char*);
@@ -165,6 +169,10 @@ int line_count(){
 	return 0;
 }
 
+int replace( char *args[] ){
+	return 0;
+}
+
 int append(){
 	int isTyping=1;
 	char inp[SENSIBLE_BUFFER_SIZE]={0};
@@ -219,7 +227,7 @@ int del_line( char *args[] ){
 		size_t movedBytes=n-endIndex;
 		size_t newSize=n-(endIndex-startIndex);
 		memmove(textFile+startIndex, textFile+endIndex, movedBytes);
-		//textFile=realloc(textFile, newSize+1);
+		textFile=realloc(textFile, newSize+1);
 		textFile[newSize]='\0';
 	}
 	return 0;

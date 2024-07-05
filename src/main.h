@@ -6,6 +6,6 @@
 extern int status;
 extern char *filename;
 
-int tokenizer( char inp[], char *inpTok[] );
+int tokenizer( char inp[], char *inpTok[], char delim[] );
 
 #endif
