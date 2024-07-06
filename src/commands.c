@@ -14,6 +14,7 @@ int help( char *args[] );
 int append();
 int replace( char *args[] );
 int del_line( char *args[] );
+int insert( char *args[] );
 int save();
 
 FILE *fp;
@@ -26,6 +27,7 @@ char *cmds[]={
 	"d",
 	"s",
 	"r",
+	"i",
 	"h",
 };
 char *helpStr[]={
@@ -36,6 +38,7 @@ char *helpStr[]={
 	"Delete focus line   \n   args: \n   '(number)'nth line\n   default:current line",
 	"Saves the file",
 	"Replace line",
+	"Insert text",
 	"Print this text",
 };
 char *textFile;
@@ -48,6 +51,7 @@ int ( *cmdsFunc[] )( char *arg[] )={
 	&del_line,
 	&save,
 	&replace,
+	&insert,
 	&help
 };
 int cmdNum=sizeof(cmds)/sizeof(char*);
@@ -167,9 +171,42 @@ int line_count(){
 	return 0;
 }
 
+int insert( char *args[] ){
+	Split splitText=str_split(textFile, curLine, 0);
+
+	char inp[SENSIBLE_BUFFER_SIZE];
+	char toInsert[SENSIBLE_BUFFER_SIZE];
+
+	int isTyping=1;
+
+	while (isTyping) {
+		fgets(inp, sizeof(toInsert), stdin);
+		if (strcmp(inp, ".\n")==0) {
+			break;
+		}
+		strcat(toInsert, inp);
+	}
+
+	prepend(toInsert, "\n");
+
+	size_t newSize=strlen(splitText.bef)+strlen(toInsert)+strlen(splitText.aft)+1;
+
+	textFile[0] = '\0';
+	textFile=realloc(textFile, newSize);
+
+	strcat(textFile, splitText.bef);
+	strcat(textFile, toInsert);
+	strcat(textFile, splitText.aft);
+
+	free(splitText.bef);
+	free(splitText.aft);
+
+	printf("%s", textFile);
+	return 0;
+}
+
 int replace( char *args[] ){
 	//textFile=realloc(textFile, 5);
-	str_split(textFile, 10, 2);
 	return 0;
 }
 

@@ -30,27 +30,41 @@ int line_counter(char *text){
 Split str_split(char *textFile, int splitPos, int lineSkip){
 	Split splitText;
 	splitText.befSize=sizeof(char);
-	splitText.aftSize=sizeof(char);
 	splitText.bef=malloc(splitText.befSize);
+	splitText.bef[0]='\0';
+
+	splitText.aftSize=sizeof(char);
 	splitText.aft=malloc(splitText.aftSize);
+	splitText.aft[0]='\0';
+
 	size_t len=strlen(textFile);
+	size_t befIndex=0, aftIndex=0;
+
+
 	int lineCounter=0;
 	for (int i=0; i<len; i++) {
 		if (textFile[i]=='\n') lineCounter++;
 		if (lineCounter<splitPos) {
 			splitText.befSize+=sizeof(char);
 			splitText.bef=realloc(splitText.bef, splitText.befSize);
-			splitText.bef[i]=textFile[i];
+			splitText.bef[befIndex]=textFile[i];
+			befIndex++;
 		}
-		if (lineCounter<splitPos+lineSkip) {
+		if (lineCounter>=splitPos+lineSkip) {
 			splitText.aftSize+=sizeof(char);
 			splitText.aft=realloc(splitText.aft, splitText.aftSize);
-			splitText.aft[i]=textFile[i];
+			splitText.aft[aftIndex]=textFile[i];
+			aftIndex++;
 		}
 	}
-	splitText.bef[splitText.befSize]='\0';
-	splitText.aft[splitText.aftSize]='\0';
-	printf("%s|%s", splitText.bef, splitText.aft);
-	free(splitText.bef);
-	free(splitText.aft);
+
+	splitText.bef[befIndex]='\0';
+	splitText.aft[aftIndex]='\0';
+	return splitText;
+}
+
+void prepend( char *s, char *t ){
+  size_t len=strlen(t);
+  memmove(s+len, s, strlen(s)+1);
+  memcpy(s, t, len);
 }

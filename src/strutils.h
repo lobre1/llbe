@@ -10,4 +10,6 @@ int line_counter(char *text);
 
 Split str_split(char *textFile, int splitPos, int lineSkip);
 
+void prepend( char *s, char *t );
+
 #endif
