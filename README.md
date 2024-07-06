@@ -23,8 +23,8 @@ Get commands using the h command
 ## TODO
 | TODO |
 | :---: |
-| Insert |
 | Replace |
 | Regex |
 | Undo/Redo |
 | Undo Tree |
+| Better implementation of insert and replace (bad implementation rn) |
