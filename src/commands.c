@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include "main.h"
+#include "strutils.h"
 
 int quit();
 int print( char *args[] );
@@ -14,9 +15,6 @@ int append();
 int replace( char *args[] );
 int del_line( char *args[] );
 int save();
-
-int isnum(char c[]);
-int line_counter( char text[] );
 
 FILE *fp;
 
@@ -170,6 +168,8 @@ int line_count(){
 }
 
 int replace( char *args[] ){
+	//textFile=realloc(textFile, 5);
+	str_split(textFile, 10, 2);
 	return 0;
 }
 
@@ -245,23 +245,3 @@ int save(){
 	return 0;
 }
 
-int line_counter(char *text){
-	if (text == NULL) return 0;
-	int counter=0;
-	size_t len=strlen(text);
-	for (size_t i=0; i<len; i++) {
-		if (text[i]=='\n' || text[i]=='\0') {
-			counter++;
-		}
-	}
-	return counter;
-}
-
-int isnum(char c[]){
-	for (size_t i=0; i<strlen(c)-1; i++) {
-		if (isdigit(c[i])==0) {
-			return 0;
-		}
-	}
-	return 1;
-}

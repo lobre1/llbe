@@ -1,13 +1,15 @@
 CC=gcc
 NAME=llbe
+FILES=main.c commands.c strutils.c
+CDEBUGFLAGS=-Wall -Wextra -ggdb3
 
 all: install
 
-install: main.c commands.c
-	$(CC) -o $(NAME) main.c commands.c
+install: $(FILES) 
+	$(CC) -o $(NAME) $(FILES)
 
-debug: main.c commands.c
-	$(CC) -Wall -Wextra -ggdb3 -o $(NAME) main.c commands.c
+debug: $(FILES)
+	$(CC) $(CDEBUGFLAGS) -o $(NAME) $(FILES)
 
 clean:
 	rm $(NAME)
