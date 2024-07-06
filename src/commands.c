@@ -188,11 +188,13 @@ int insert( char *args[] ){
 	}
 
 	prepend(toInsert, "\n");
+	toInsert[strlen(toInsert)-1]='\0';
 
 	size_t newSize=strlen(splitText.bef)+strlen(toInsert)+strlen(splitText.aft)+1;
 
 	textFile[0] = '\0';
 	textFile=realloc(textFile, newSize);
+	//splitText.aft[splitText.aftSize-2]='\0';
 
 	strcat(textFile, splitText.bef);
 	strcat(textFile, toInsert);
